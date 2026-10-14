@@ -1,0 +1,729 @@
+/* Video_Call_UI スタイル（タスク 16.1・16.2 / 要件 4.2・4.3・4.4）。
+
+   レスポンシブ方針:
+   - .call-stage は position:relative なコンテナ。背景スキンはここに適用する。
+   - .call-remotes は CSS Grid の auto-fit で参加者数に応じて列数が伸縮する。
+     スマホ幅では 1 列、PC 幅では複数列になる（要件 4.2）。
+   - ローカル映像はスマホ幅では画面下部のフローティングタイル、PC 幅では
+     右下のピクチャーインピクチャ風に配置する。 */
+
+.page--call {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.call-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.call-header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.call-skin-selector {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.9rem;
+}
+
+.call-skin-selector select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+/* 通話ステージ: 背景スキンの適用先（要件 4.3）。 */
+.call-stage {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  border-radius: 12px;
+  overflow: hidden;
+  /* 既定背景。applyBackgroundSkin がインラインで上書きする。 */
+  background: radial-gradient(circle at 50% 20%, #2b2f3a 0%, #14161c 100%);
+  --call-skin-overlay: rgba(0, 0, 0, 0.25);
+}
+
+/* リモート参加者グリッド（要件 4.1・4.2）。 */
+.call-remotes {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+/* 非管理者（モバイル/エンドユーザー）で共有資料を受信中のリモートカメラ配置。
+   共有資料（.call-shared, z-index:3）をメイン（大）として活かしつつ、リモート
+   カメラは右上の小さな PiP サムネイルとして共有資料の上に重ねて表示する。
+   ローカル自映像 PiP（.call-tile--local, 右下）と重ならないよう右上に置く。 */
+.call-remotes--pip {
+  inset: auto;
+  top: var(--space-md);
+  right: var(--space-md);
+  left: auto;
+  bottom: auto;
+  width: 180px;
+  height: 120px;
+  z-index: 4;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: 2px;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  background: #000;
+}
+
+.call-tile {
+  position: relative;
+  background: var(--call-skin-overlay);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.call-tile--remote {
+  width: 100%;
+  height: 100%;
+}
+
+/* ローカル映像: 既定は右下の PiP。 */
+.call-tile--local {
+  position: absolute;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  width: 200px;
+  height: 140px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+}
+
+/* 共有資料（画面共有）の表示領域。
+   全参加者（モバイル含む）が閲覧する主要領域として、リモートグリッドの上に
+   大きく重ねて表示する。screen ストリーム受信時のみ data-active で表示される。 */
+.call-shared {
+  position: absolute;
+  inset: var(--space-sm);
+  z-index: 3;
+  display: none;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+.call-shared[data-active='true'] {
+  display: flex;
+}
+
+.call-shared-caption {
+  flex: 0 0 auto;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* 共有映像そのもの（subscribe されたビデオ要素の親）。領域全体を占有する。 */
+.call-shared-view {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  background: #000;
+}
+
+/* 非管理者の共有者（想定外）向けのオフスクリーンプレビュー。
+   共有映像は subscribe 側（.call-shared）に表示されるためここは見せない。 */
+.call-screen-indicator {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  pointer-events: none;
+}
+
+/* 管理者レイアウト（要件 4.1・4.2）。
+   共有資料をメイン（大）に、リモート映像と自分の映像をサブビュー（小）として
+   同時に表示する。CSS Grid で メイン + サイドの 2 領域を構成する。 */
+/* 管理画面の表示レイアウトの切り替え。
+   data-sharing は CallPage が共有状態に応じて設定する識別子で、CSS 側で
+   表示レイアウトを切り替えるためだけに使う（見た目の制御はすべてここで行う）。
+     'false' … 共有前: 相手映像を全面に表示し、自分は PiP（小窓）に置く。
+     'true'  … 共有中: 共有資料を主役（メイン）に、相手映像と自分を小画面で並べる。
+   3 つの描画先（相手映像・自分・共有資料）は切替後も DOM に残す。Vonage SDK は
+   initPublisher / initScreenPublisher に渡した要素の内側に映像を埋め込むため、
+   display:none で消すと共有開始・停止のたびに SDK の再初期化が必要になる。 */
+.call-admin-layout {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  grid-template-rows: 100%;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+}
+
+/* 共有前: 資料のメイン領域を隠し、映像列をステージ全体に広げる。
+   相手映像がステージ全体を埋め、自分は PiP として右下に重なる。 */
+.call-admin-layout[data-sharing='false'] {
+  grid-template-columns: 100%;
+}
+
+.call-admin-layout[data-sharing='false'] .call-admin-main {
+  display: none;
+}
+
+/* 映像列を共有前の全面表示に切り替える（共有中は縦積みの小画面列）。 */
+.call-admin-layout[data-sharing='false'] .call-admin-side {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* 共有前の相手映像はステージ全体を埋める。 */
+.call-admin-layout[data-sharing='false'] .call-admin-subview.call-remotes {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border-radius: 10px;
+}
+
+/* 共有前の自分映像は PiP（小窓）。共有中のサブビュー枠（flex:1 伸ばし）とは
+   切り分けるため、絶対配置で右下に固定する。 */
+.call-admin-layout[data-sharing='false'] .call-admin-subview--local {
+  position: absolute;
+  right: var(--space-md);
+  bottom: var(--space-md);
+  left: auto;
+  width: 200px;
+  height: 140px;
+  min-height: 0;
+  flex: none;
+  z-index: 2;
+}
+
+/* メイン: 共有資料領域。 */
+.call-admin-main {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* 管理者自身の画面共有プレビュー（publisher の描画先）。メイン領域全体を占有する。 */
+.call-admin-shared {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  background: #000;
+}
+
+/* 共有していないときのメイン領域プレースホルダー。 */
+.call-share-placeholder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: var(--space-lg);
+  text-align: center;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+}
+
+/* サブビュー列: リモート映像 + 自分の映像を縦積み（PC）。 */
+.call-admin-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.call-admin-subview {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--call-skin-overlay);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* 管理者レイアウト内のリモートグリッドは絶対配置ではなくサブビュー枠に収める。 */
+.call-admin-subview.call-remotes {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1fr;
+  gap: 4px;
+  padding: 4px;
+}
+
+.call-admin-subview--local {
+  border: 2px solid rgba(255, 255, 255, 0.7);
+}
+
+.call-subview-caption {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0.2rem 0.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.75rem;
+  border-bottom-right-radius: 6px;
+}
+
+/* 画面共有中の状態表示（管理者のみ）。 */
+.call-sharing-indicator {
+  position: absolute;
+  top: var(--space-sm);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  margin: 0;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+/* 接続状態オーバーレイ（接続中 / 失敗 + 再接続 / 要件 4.4）。 */
+.call-status {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+}
+
+.call-status--connecting {
+  font-size: 1.1rem;
+}
+
+.call-status__message {
+  margin: 0;
+}
+
+.call-error-message {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.call-error-detail {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+  max-width: 32rem;
+  word-break: break-word;
+}
+
+.call-reconnect-button {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.call-reconnect-button:hover,
+.call-reconnect-button:focus-visible {
+  filter: brightness(1.1);
+}
+
+/* 主操作（再接続・再参加）に対する副操作。接続の中止や画面からの離脱に使う。
+   塗りつぶしと差別化できるよう枠線のみとし、暗いオーバーレイ上でも読めるコントラストを保つ。 */
+.call-reconnect-button--secondary {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.call-reconnect-button--secondary:hover,
+.call-reconnect-button--secondary:focus-visible {
+  background: rgba(255, 255, 255, 0.16);
+  filter: none;
+}
+
+/* 通話コントロールバー（接続中のみ表示 / カメラ ON・OFF など）。
+   ステージ下部中央にフロート配置し、スマホ・PC ともに親指で押しやすい位置に置く。 */
+.call-controls {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-md);
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.25rem 0.4rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.call-control-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  min-width: 44px;
+  min-height: 44px;
+  white-space: nowrap;
+}
+
+.call-control-button:hover,
+.call-control-button:focus-visible {
+  filter: brightness(1.1);
+}
+
+/* OFF 状態（映像停止中）は押下状態として視覚的に区別する。 */
+.call-control-button[aria-pressed='false'] {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+/* 通話終了（ハングアップ）ボタン。危険操作として赤系の背景で強調する。 */
+.call-control-button--danger {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* 通話コントロールボタン内のアイコン（絵文字）。視覚的に小さく、画面を隠さないようにする。 */
+.call-control-button::before {
+  display: inline-block;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+/* ラベルテキストはスクリーンリーダーのみ表示（アイコンのみで識別できるようにする）。 */
+.call-control-button > * {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* アイコンの割り当て（マイク / カメラ / 共有 / 切断）。 */
+.call-control-button[aria-label*='microphone' i]::before,
+.call-control-button[aria-label*='マイク' i]::before {
+  content: '🎙️';
+}
+
+.call-control-button[aria-pressed='false'][aria-label*='microphone' i]::before,
+.call-control-button[aria-pressed='false'][aria-label*='マイク' i]::before {
+  content: '🔇';
+}
+
+.call-control-button[aria-label*='camera' i]::before,
+.call-control-button[aria-label*='カメラ' i]::before {
+  content: '📸';
+}
+
+.call-control-button[aria-pressed='false'][aria-label*='camera' i]::before,
+.call-control-button[aria-pressed='false'][aria-label*='カメラ' i]::before {
+  content: '📷';
+}
+
+.call-control-button[aria-label*='share' i]::before,
+.call-control-button[aria-label*='共有' i]::before {
+  content: '🖥️';
+}
+
+.call-control-button[aria-label*='hang' i]::before,
+.call-control-button[aria-label*='切断' i]::before,
+.call-control-button[aria-label*='Hang' i]::before,
+.call-control-button[aria-label*='end' i]::before,
+.call-control-button[aria-label*='終了' i]::before {
+  content: '⏹️';
+}
+
+/* 絶対配置のボタンはアイコン中心で押しやすくする。 */
+.call-controls .call-control-button {
+  position: static;
+}
+
+.call-control-button--danger:hover,
+.call-control-button--danger:focus-visible {
+  filter: brightness(1.1);
+}
+
+.call-session {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* スマートフォン幅: 参加者は 1 列、ローカル映像は小さめの下部フロート（要件 4.2）。 */
+@media (max-width: 640px) {
+  .call-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .call-remotes {
+    grid-template-columns: 1fr;
+  }
+
+  .call-stage {
+    min-height: 70vh;
+  }
+
+  .call-tile--local {
+    width: 120px;
+    height: 90px;
+    right: var(--space-sm);
+    bottom: var(--space-sm);
+  }
+
+  /* ローカル PiP と重ならないよう左寄せの下部に配置する。 */
+  .call-controls {
+    left: var(--space-sm);
+    bottom: var(--space-sm);
+    transform: none;
+    justify-content: flex-start;
+  }
+
+  .call-control-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* モバイルでは共有資料が主役。ステージ全体に広げて確実に見えるようにする。 */
+  .call-shared {
+    inset: 0;
+    border-radius: 0;
+  }
+
+  /* モバイルの共有資料受信中: リモートカメラ PiP は右上の小さなサムネイル。
+     共有資料が全画面のため、その上にはっきり見える小窓として重ねる。 */
+  .call-remotes--pip {
+    top: var(--space-sm);
+    right: var(--space-sm);
+    width: 110px;
+    height: 80px;
+  }
+
+  .call-sharing-indicator {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  /* 管理者レイアウト（共有中）: 狭い幅では縦積みにし、3 つすべてを表示
+     （必要ならスクロール）。 */
+  .call-admin-layout[data-sharing='true'] {
+    grid-template-columns: 100%;
+    grid-template-rows: minmax(220px, 1.6fr) minmax(0, 1fr);
+    overflow: auto;
+  }
+
+  /* 管理者レイアウト（共有前）: 相手映像を全面表示のまま維持する。狭い幅でも
+     1:1 のライブビデオ構成を優先し、自分は PiP（小窓）に置く。 */
+  .call-admin-layout[data-sharing='false'] {
+    grid-template-columns: 100%;
+    grid-template-rows: 100%;
+    overflow: hidden;
+  }
+
+  .call-admin-layout[data-sharing='false'] .call-admin-subview--local {
+    width: 130px;
+    height: 96px;
+  }
+
+  .call-admin-layout[data-sharing='true'] .call-admin-side {
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .call-admin-layout[data-sharing='true'] .call-admin-subview {
+    flex: 1 0 45%;
+    min-height: 110px;
+  }
+}
+
+/* 中間幅（タブレット等）でもサブビュー列がつぶれないように調整する。 */
+@media (max-width: 900px) and (min-width: 641px) {
+  /* 共有中: 資料メイン + 小画面列。 */
+  .call-admin-layout[data-sharing='true'] {
+    grid-template-columns: minmax(0, 1fr) 200px;
+  }
+
+  /* 共有前: 相手映像を全面表示（1:1 のライブビデオ）。 */
+  .call-admin-layout[data-sharing='false'] {
+    grid-template-columns: 100%;
+  }
+}
+
+/* 大画面（PC）: 参加者タイルをやや大きめに。 */
+@media (min-width: 1024px) {
+  .call-remotes {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  /* PiP は共有資料受信中の小窓。大画面でも 1 列のサムネイルを維持する。 */
+  .call-remotes--pip {
+    grid-template-columns: 1fr;
+    width: 220px;
+    height: 150px;
+  }
+
+  .call-tile--local {
+    width: 240px;
+    height: 160px;
+  }
+
+  /* 共有前の自分映像 PiP は大画面でも小窓を保つ（相手映像を最大まで広げるため）。 */
+  .call-admin-layout[data-sharing='false'] .call-admin-subview--local {
+    width: 240px;
+    height: 160px;
+  }
+}
+
+/* =====================================================================
+   没入型 / フルスクリーン表示（ゲスト参加時・WhatsApp リンク経由）
+   - ヘッダー、スキン選択、セッション表示を隠す
+   - ステージをビューポート全体に広げる
+   - コントロールバーは下部に維持（最小限の操作のみ）
+   ===================================================================== */
+
+.page--call--immersive {
+  max-width: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page--call--immersive .call-stage {
+  flex: 1 1 auto;
+  min-height: 100dvh;
+  border-radius: 0;
+  border: none;
+}
+
+.page--call--immersive .call-stage--immersive {
+  height: 100dvh;
+  min-height: 100dvh;
+  border-radius: 0;
+  border: none;
+}
+
+/* 没入型でもコントロールバーは下部にフロート表示（最小限の操作のみ） */
+.page--call--immersive .call-controls {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-md);
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-md);
+}
+
+@media (max-width: 640px) {
+  .page--call--immersive .call-controls {
+    left: var(--space-sm);
+    bottom: var(--space-sm);
+    transform: none;
+    justify-content: flex-start;
+  }
+}
+
+/* 没入型では共有資料がステージ全体を占有 */
+.page--call--immersive .call-shared {
+  inset: 0;
+  border-radius: 0;
+}
+
+.page--call--immersive .call-shared-view {
+  height: 100%;
+}
+
+/* 没入型での共有資料受信中: リモート PiP は右上の小さなサムネイル */
+.page--call--immersive .call-remotes--pip {
+  top: var(--space-sm);
+  right: var(--space-sm);
+  width: 120px;
+  height: 80px;
+}
+
+/* ステージが全画面のため、共有資料の caption も少し調整 */
+.page--call--immersive .call-shared-caption {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}

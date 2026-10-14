@@ -1,0 +1,859 @@
+/* ベースのレスポンシブスタイル（タスク 15.1）。
+   詳細な UI は後続タスク 16/17 で洗練する。 */
+
+:root {
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --color-text: #1f2933;
+  --color-primary: #6a1b9a;
+  --color-border: #d7dce1;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --max-width: 1024px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-header__brand a {
+  font-weight: 700;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.app-nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.app-nav a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.language-switcher {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+/* 管理画面は全幅・左寄せ。centering せず、白枠が全項目をカバーするようにする */
+.app-main--admin {
+  display: flex;
+  flex-direction: column;
+  max-width: none;
+  margin: 0;
+  width: 100%;
+  padding: var(--space-lg) var(--space-md);
+}
+
+.page {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: var(--space-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 管理画面の白枠は全幅・全高さ。全項目をカバーする */
+.page--admin {
+  flex: 1;
+  max-width: none;
+  width: 100%;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 360px;
+}
+
+.login-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.login-form input {
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+/* スマートフォン幅: ヘッダーを縦積みにする（要件 4.2 / 5.5 の土台） */
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .language-switcher {
+    margin-left: 0;
+  }
+}
+
+/* =====================================================================
+   Admin_UI スタイル（タスク 17.1 / 17.2 / 要件 5.5）
+   フレックス/グリッド + メディアクエリでスマートフォン・PC に対応する。
+   ===================================================================== */
+
+.form-error {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: #fdecea;
+  color: #b71c1c;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+}
+
+/* 操作成功の一時通知（form-error と対） */
+.form-notice {
+  margin: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #a5d6a7;
+  border-radius: 4px;
+}
+
+/* 汎用ボタン */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn--danger {
+  background: #c62828;
+  border-color: #c62828;
+  color: #fff;
+}
+
+.btn--link {
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  padding: 0.25rem 0.4rem;
+}
+
+.btn--danger-text {
+  color: #c62828;
+}
+
+.btn--icon {
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0 0.35rem;
+  cursor: pointer;
+}
+
+/* Admin レイアウト */
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  justify-content: flex-start;
+}
+
+.admin-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.admin-header h1 {
+  margin: 0;
+}
+
+.admin-subtitle {
+  margin: 0.25rem 0 0;
+  color: #52606d;
+  font-size: 0.9rem;
+}
+
+/* メニュー（サイドバー）＋コンテンツの 2 カラム（PC） */
+.admin-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-lg);
+  align-items: start;
+  min-width: 0;
+  /* Admin panel needs more width for recordings, transcriptions, status, actions columns */
+  width: 100%;
+}
+
+.admin-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.admin-menu__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-menu__item--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.admin-menu__badge {
+  min-width: 1.4rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: #c62828;
+  color: #fff;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.admin-menu__note {
+  margin-top: var(--space-md);
+  font-size: 0.8rem;
+  color: #52606d;
+}
+
+.admin-content {
+  min-width: 0;
+}
+
+/* パネル共通 */
+.admin-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  gap: var(--space-md);
+}
+
+.admin-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.admin-panel__header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.admin-empty {
+  color: #52606d;
+  font-style: italic;
+}
+
+.admin-hint {
+  font-size: 0.85rem;
+  color: #52606d;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-size: 0.9rem;
+}
+
+/* 予約済みスロット一覧 */
+.booked-slots-section {
+  width: 100%;
+  min-width: 0;
+}
+
+.booked-slots__title {
+  margin: 0 0 var(--space-sm);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.booked-slots__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.booked-slot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.booked-slot__view {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.booked-slot__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  flex: 1;
+  min-width: 0;
+}
+
+.booked-slot__time {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.booked-slot__contact {
+  font-family: monospace;
+}
+
+.booked-slot__service {
+  color: #52606d;
+}
+
+.booked-slot__status {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.booked-slot__status--pending {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.booked-slot__status--confirmed {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.booked-slot__status--cancelled {
+  background: #fdecea;
+  color: #c62828;
+}
+
+.booked-slot__status--completed {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.booked-slot__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.booked-slot.editing {
+  padding: var(--space-md);
+}
+
+.booked-slot__edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.booked-slot__edit-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.booked-slot__edit-row .field {
+  flex: 1;
+  min-width: 120px;
+}
+
+.booked-slot__edit-actions {
+  display: flex;
+  gap: var(--space-sm);
+  padding-top: var(--space-sm);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  font-size: 0.9rem;
+}
+
+.field--checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.field input,
+.field select {
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font: inherit;
+}
+
+/* 通知リスト */
+.notification-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-left: 4px solid var(--color-primary);
+  background: #f3e5f5;
+  border-radius: 6px;
+}
+
+.notification-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.notification-item__meta {
+  font-size: 0.85rem;
+  color: #52606d;
+}
+
+.notification-item__contact {
+  font-size: 0.85rem;
+}
+
+/* 録画パネル */
+.recording-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: flex-end;
+}
+
+.recording-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.recording-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #eceff1;
+  font-size: 0.85rem;
+}
+
+.recording-badge__dot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: #90a4ae;
+}
+
+.recording-badge--started .recording-badge__dot,
+.recording-badge--starting .recording-badge__dot {
+  background: #c62828;
+}
+
+.recording-badge--stopped .recording-badge__dot,
+.recording-badge--transcription_ready .recording-badge__dot {
+  background: #2e7d32;
+}
+
+.recording-badge--start_failed .recording-badge__dot,
+.recording-badge--stop_failed .recording-badge__dot,
+.recording-badge--transcription_failed .recording-badge__dot {
+  background: #ef6c00;
+}
+
+/* 録画一覧のダウンロードボタングループ */
+.archive-download-group {
+  display: inline-flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* 予約テーブル */
+.reservation-form__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.reservation-table-wrap {
+  overflow-x: auto;
+  min-width: 100%;
+}
+
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 1200px;
+}
+
+.reservation-table th,
+.reservation-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.reservation-table th:nth-child(1),
+.reservation-table td:nth-child(1) {
+  width: 160px;
+}
+.reservation-table th:nth-child(2),
+.reservation-table td:nth-child(2) {
+  width: 140px;
+}
+.reservation-table th:nth-child(3),
+.reservation-table td:nth-child(3) {
+  width: 160px;
+}
+.reservation-table th:nth-child(4),
+.reservation-table td:nth-child(4) {
+  width: 120px;
+}
+.reservation-table th:nth-child(5),
+.reservation-table td:nth-child(5),
+.reservation-table th:nth-child(6),
+.reservation-table td:nth-child(6) {
+  width: 200px;
+}
+.reservation-table th:nth-child(7),
+.reservation-table td:nth-child(7) {
+  width: 200px;
+}
+
+.reservation-table th,
+.reservation-table td {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.reservation-actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* メディアリンク（録画・文字起こし） */
+.media-link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.media-link__download {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  text-decoration: none;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  background: transparent;
+  transition: background 0.2s, color 0.2s;
+}
+
+.media-link__download:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.media-meta {
+  font-size: 0.7rem;
+  color: #52606d;
+  margin-top: 2px;
+}
+
+/* メディアエラー・空状態 */
+.media-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  color: #c62828;
+  background: #fdecea;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  cursor: help;
+}
+
+.media-empty {
+  font-size: 0.8rem;
+  color: #52606d;
+  font-style: italic;
+}
+
+/* 文字起こし */
+.transcription-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: flex-end;
+}
+
+.transcript-speakers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.transcript-speaker {
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: var(--space-md);
+}
+
+.transcript-speaker__header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.transcript-speaker__label {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.transcript-speaker__stream {
+  font-size: 0.8rem;
+  color: #52606d;
+}
+
+.transcript-segments {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.transcript-segment {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.transcript-segment__time {
+  flex: 0 0 auto;
+  color: #52606d;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+}
+
+/* 文字起こし分割表示（左: ゲスト、右: 管理者） */
+.transcript-split-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.transcript-column {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.transcript-column__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.transcript-column__header h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-primary);
+}
+
+.transcript-column__empty {
+  padding: var(--space-lg);
+  text-align: center;
+  color: #52606d;
+  font-style: italic;
+}
+
+/* スマートフォン幅では縦並びに切り替え */
+@media (max-width: 900px) {
+  .transcript-split-view {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* スマートフォン幅: メニューを上部へ、テーブルをカード表示に切り替える（要件 5.5） */
+@media (max-width: 640px) {
+  .admin-body {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-menu ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .admin-menu__item {
+    width: auto;
+  }
+
+  .reservation-table thead {
+    display: none;
+  }
+
+  .reservation-table,
+  .reservation-table tbody,
+  .reservation-table tr,
+  .reservation-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .reservation-table th {
+    display: none;
+  }
+
+  .reservation-table tr {
+    margin-bottom: var(--space-md);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: var(--space-sm);
+  }
+
+  .reservation-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.35rem var(--space-sm);
+  }
+
+  .reservation-table td:last-child {
+    border-bottom: none;
+  }
+
+  .reservation-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #52606d;
+    flex-shrink: 0;
+    margin-right: var(--space-sm);
+  }
+
+  .media-link {
+    width: 100%;
+  }
+
+  .media-link__download {
+    width: 100%;
+    justify-content: center;
+  }
+}

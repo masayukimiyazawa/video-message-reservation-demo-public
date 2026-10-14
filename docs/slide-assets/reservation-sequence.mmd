@@ -1,0 +1,24 @@
+sequenceDiagram
+  actor U as Customer
+  participant WA as WhatsApp
+  participant WH as Express webhook
+  participant BOT as Chatbot service
+  participant D as Domain
+  participant RS as Reservation service
+  participant DB as MongoDB
+  U->>WA: Choose service and time
+  WA->>WH: POST /webhooks/inbound-message
+  WH->>WH: Verify Vonage signature
+  WH->>BOT: Payload and sender
+  BOT->>D: Advance conversation state
+  D-->>BOT: Options or completed DTO
+  alt Conversation incomplete
+    BOT->>WA: Send next interactive options
+  else Reservation confirmed
+    BOT->>RS: contact, service, time, language
+    RS->>D: Validate input and availability
+    RS->>DB: Persist reservation
+    DB-->>RS: Save result
+    RS-->>BOT: Confirmation or alternatives
+    BOT->>WA: Send confirmation or alternatives
+  end

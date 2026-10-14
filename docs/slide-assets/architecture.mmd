@@ -1,0 +1,19 @@
+flowchart LR
+  customer["Customer<br/>WhatsApp"] -->|Chat| messages["Vonage Messages API"]
+  messages -->|Inbound / status webhook| express
+  express["Express API<br/>Signature checks / REST"] --> chatbot["Chatbot Service"]
+  express --> services["Reservation / Auth / Session<br/>Recording / Notification"]
+  chatbot --> domain["Domain<br/>Conversation / availability / authorization"]
+  services --> domain
+  chatbot --> wa["WhatsApp delivery"]
+  wa --> messages
+  services --> store["Mongoose stores"]
+  store --> mongo[("MongoDB Atlas<br/>Reservations / Users / Join tokens / Presence")]
+  services --> video["Vonage Video API<br/>Sessions / archives / transcripts"]
+  video -->|Monitoring webhooks| express
+  services --> cron["node-cron"]
+  cron --> services
+  services -->|REST| spa["React SPA<br/>Admin / Join / Call"]
+  express -->|SPA hosting| spa
+  spa <-->|Socket.IO| express
+  spa -->|Video Client SDK<br/>Media streams| video

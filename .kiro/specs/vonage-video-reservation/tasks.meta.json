@@ -1,0 +1,629 @@
+{
+  "pbtResults": {
+    "2.3 会話遷移のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241447510
+    },
+    "2.4 予約 DTO 構築のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241448804
+    },
+    "3.3 空き判定のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241450218
+    },
+    "3.4 予約バリデーションのプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241451591
+    },
+    "4.3 到来予約選択のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241452992
+    },
+    "4.4 認可判定のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241454461
+    },
+    "5.3 アーカイブオプション構築のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241455878
+    },
+    "5.4 文字起こし整形のプロパティテストを書く": {
+      "status": "passed",
+      "lastRunTimestamp": 1790241456914
+    }
+  },
+  "executionHistory": {
+    "1. プロジェクト基盤とディレクトリ構成のセットアップ": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236128396
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236147036
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238230423
+      }
+    ],
+    "2.1 会話状態遷移関数 `nextStep(state, input)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129156
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238235914
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238394115
+      }
+    ],
+    "2.2 予約 DTO 構築関数 `buildReservationDTO(completedState)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129212
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238237348
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238396551
+      }
+    ],
+    "3.1 空き判定関数 `checkAvailability(existing[], requestedSlot)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129291
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238238694
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238526148
+      }
+    ],
+    "3.2 予約バリデーション関数 `validateReservation(record)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129338
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238240138
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238396964
+      }
+    ],
+    "4.1 到来予約選択関数 `selectDueReservations(reservations[], now)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129398
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238241145
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238398189
+      }
+    ],
+    "4.2 認可判定関数 `canAccess(role, action, ownership)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129444
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238405611
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238528459
+      }
+    ],
+    "5.1 アーカイブオプション構築関数 `buildArchiveOptions(req)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129489
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238407020
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238528679
+      }
+    ],
+    "5.2 文字起こし整形関数 `groupBySpeaker(rawJson)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129593
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238408024
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238529789
+      }
+    ],
+    "6. チェックポイント - ドメイン層のテストがすべて通ることを確認": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129646
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238542534
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238562226
+      }
+    ],
+    "7.1 Reservation / User の Mongoose スキーマとモデルを実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129689
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238567519
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238660332
+      }
+    ],
+    "7.2 Reservation_Store リポジトリと Atlas 接続を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129742
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238678350
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238821465
+      }
+    ],
+    "8.1 予約 CRUD と一覧取得サービスを実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129787
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238828684
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239102704
+      }
+    ],
+    "9.1 ログインエンドポイントと JWT 発行を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129836
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238830216
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239100342
+      }
+    ],
+    "9.2 認可ミドルウェア `authorize(action)` を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129882
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238831264
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239101292
+      }
+    ],
+    "10.1 受信/ステータス Webhook と会話進行を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129932
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239116663
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239554962
+      }
+    ],
+    "10.2 WhatsApp 送信（確定・リッチメディア・言語別）を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236129980
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239118068
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239556234
+      }
+    ],
+    "11.1 スケジューラと通知送出を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130026
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239119475
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239557677
+      }
+    ],
+    "12.1 録画開始/停止と状態通知を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130077
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239120385
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239559080
+      }
+    ],
+    "12.2 Post-Call Transcription 取得と整形を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130164
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239121608
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239560180
+      }
+    ],
+    "13.1 セッション/トークンエンドポイントと全 API ルーティングを配線する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130220
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239565716
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240020284
+      }
+    ],
+    "14. チェックポイント - バックエンド統合の確認": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130264
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240021213
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240038280
+      }
+    ],
+    "15.1 React SPA 基盤・ルーティング・API/Socket クライアントを実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130303
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240046976
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240325066
+      }
+    ],
+    "15.2 `react-i18next` による en/ja i18n と言語切替を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130357
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240048058
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240323891
+      }
+    ],
+    "16.1 ビデオ通話画面（レスポンシブ・再接続）を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130401
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240332440
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240776889
+      }
+    ],
+    "16.2 背景スキン選択（`applyBackgroundSkin(skinId)`）を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130444
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240333841
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240778263
+      }
+    ],
+    "17.1 ログイン・ロール別メニューとレスポンシブ表示を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130488
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240335242
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240779722
+      }
+    ],
+    "17.2 予約管理・画面内通知・録画操作・文字起こし表示を実装する": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130569
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240336801
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240781384
+      }
+    ],
+    "19. 最終チェックポイント - すべてのテストが通ることを確認": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790236130613
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240792173
+      },
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240827267
+      }
+    ],
+    "2. チャットボット会話ドメインロジックの実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238396651
+      }
+    ],
+    "3. 予約ドメインロジック（空き判定・バリデーション）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238526232
+      }
+    ],
+    "4. 通知・認可ドメインロジックの実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238528534
+      }
+    ],
+    "5. 録画・文字起こしドメインロジックの実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238529942
+      }
+    ],
+    "7. データ層（MongoDB Atlas / Mongoose）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790238821542
+      }
+    ],
+    "9. Auth_Service（RBAC / JWT）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239101340
+      }
+    ],
+    "8. Reservation_System アプリケーションサービスの実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239102742
+      }
+    ],
+    "10. Chatbot_Service（Vonage Messages API Webhook）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239556280
+      }
+    ],
+    "11. Notification_Service（スケジューラ + Socket.IO）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239557712
+      }
+    ],
+    "12. Recording_Service / Transcription_Service（Vonage Video API）の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790239560245
+      }
+    ],
+    "13. Video トークン発行と Express API 配線": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240020372
+      }
+    ],
+    "15. フロントエンド基盤と i18n のセットアップ": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240325114
+      }
+    ],
+    "16. Video_Call_UI の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240778328
+      }
+    ],
+    "17. Admin_UI の実装": [
+      {
+        "executionId": "3bdc4b96-f841-4431-9fdc-ad1101ec35c8",
+        "chatSessionId": "sess_53b5478c-7fbe-45bc-96ee-929b04f963e3",
+        "timestamp": 1790240781460
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+sequenceDiagram
+  participant CR as node-cron
+  participant NS as Notification service
+  participant DB as MongoDB
+  participant JL as Join link service
+  participant WA as Vonage Messages
+  participant IO as Socket.IO
+  participant A as Admin SPA
+  actor G as Guest
+  participant J as Join API
+  participant V as Vonage Video
+  CR->>NS: Poll due bookings and reminders
+  NS->>DB: Find eligible reservations
+  DB-->>NS: Confirmed reservations
+  NS->>JL: Issue link for due booking
+  JL->>DB: Store expiring JoinToken
+  NS->>WA: WhatsApp notice with due-time link
+  NS->>IO: Emit reservation event
+  IO-->>A: Live admin notification
+  G->>J: POST /sessions/join/:tokenId
+  J->>DB: Atomically consume one-time token
+  J->>V: Issue guest publisher token
+  V-->>J: Video connection credentials
+  J-->>G: token, sessionId, applicationId
+  G->>V: Join using Video Client SDK
+  V-->>J: Session and archive monitoring webhooks
